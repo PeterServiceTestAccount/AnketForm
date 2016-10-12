@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
+    <script src="js/myUsers.js"></script>
+<body ng-app="myApp" ng-controller="userCtrl">
+<div class="container">
+    <div class="col-md-10 panel panel-default col-md-offset-1">
+        <form role="form">
+            <table>
+                <colgroup>
+                    <col width="15%"/>
+                    <col width="35%"/>
+                    <col width="20%"/>
+                    <col width="30%"/>
+                </colgroup>
+                <tr>
+                    <td><label class="control-label" for="language" translate>LANGUAGE</label>:</td>
+                    <td>
+                        <select id="language" ng-change="changeLanguage()" ng-model="result.language">
+                            <option value="ru" translate>RUSSIAN</option>
+                            <option value="en" translate>ENGLISH</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="control-label" for="lastname" translate="">LASTNAME</label>:</td>
+                    <td><input id="lastname" ng-model="result.lastname" required/></td>
+                    <td ng-if="result.sex == 0"><label for="maidenname" translate="">MAIDENNAME</label>:</td>
+                    <td ng-if="result.sex == 0"><input id="maidenname" ng-model="result.maidenname"/></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label" for="firstname" translate>FIRSTNAME</label>:</td>
+                    <td><input id="firstname" ng-model="result.firstname" required/></td>
+                </tr>
+                <tr>
+                    <td><label class=" control-label" for="middlename" translate>MIDDLENAME</label>:</td>
+                    <td><input id="middlename" ng-model="result.middlename"/></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label" for="age" translate="">AGE</label>:</td>
+                    <td><input id="age" ng-model="result.age"/></td>
+                </tr>
+                <tr>
+                    <td><label for="sex" translate>SEX</label>:</td>
+                    <td>
+                        <select id="sex" ng-model="result.sex">
+                            <option value="1" translate>MALE</option>
+                            <option value="0" translate>FEMALE</option>
+                        </select>
+                    </td>
+                    <td><label><input type="checkbox" id="married" ng-model="result.married"/> <span translate>{{result.sex == '1' ? 'MMARIED' : 'FMARIED'}}</span></label></td>
+                    <td><label><input type="checkbox" id="children" ng-model="result.child"/> <span translate>HASCHILDREN</span></label></td>
+                </tr>
+            </table>
+
+            <div class="form-group" ng-show="result.child">
+                <table class="table table-bordered" ng-show="result.children.length > 0">
+                    <thead>
+                    <th translate>LASTNAME</th>
+                    <th translate>FIRSTNAME</th>
+                    <th translate>MIDDLENAME</th>
+                    <th></th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="child in result.children">
+                        <td>{{child.lastname}}</td>
+                        <td>{{child.firstname}}</td>
+                        <td>{{child.middlename}}</td>
+                        <td>
+                            <button class="btn-danger btn" ng-click="removeChild($index)">X</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="form-group" ng-show="newChild != null">
+                    <div class="form-group col-md-3">
+                        <label for="newlastname" translate="">LASTNAME</label>:
+                        <input id="newlastname" ng-model="newChild.lastname"/>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="newfirstname" translate="">FIRSTNAME</label>:
+                        <input id="newfirstname" ng-model="newChild.firstname"/>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="newmiddlename" translate="">MIDDLENAME</label>:
+                        <input id="newmiddlename" ng-model="newChild.middlename"/>
+                    </div>
+                </div>
+                <button class="btn btn-danger form-control" ng-click="addChild()" translate="">ADDCHILD</button>
+            </div>
+            <div class="form-group col-md-12">
+                <button id="submit" class="center-block btn btn-primary" ng-click="save_result()" translate="">SAVE
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
